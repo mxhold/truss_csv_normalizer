@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+require "csv_normalizer"
+
+csv_string = ARGF.read.encode("UTF-8", invalid: :replace, undef: :replace)
+
+on_parse_error = -> (error) do
+  STDERR.puts "Skipping line: #{error}"
+end
+
+print CSVNormalizer.new(csv_string, on_parse_error: on_parse_error).normalize
